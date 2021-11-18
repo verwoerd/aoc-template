@@ -9,7 +9,7 @@ object Resource
 inline fun withResourceFile(problem: (BufferedReader) -> Any) {
   val startTime = System.currentTimeMillis()
   try {
-    val result = Resource::class.java.getResourceAsStream("input").bufferedReader().run(problem)
+    val result = Resource::class.java.getResourceAsStream("input")!!.bufferedReader().run(problem)
     println(result)
   } catch (e: Throwable) {
     println("Caught exception ${e.localizedMessage}")
