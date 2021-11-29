@@ -4,7 +4,6 @@ plugins {
 
 repositories {
   mavenCentral()
-  jcenter()
 }
 val kotestVersion: String by project
 val implementation by configurations

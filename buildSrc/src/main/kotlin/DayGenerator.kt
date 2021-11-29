@@ -14,7 +14,7 @@ object DayGenerator {
 
   fun findLastDay(base: File): Int {
     return base.list()!!.mapNotNull { moduleRegex.matchEntire(it) }
-      .map { it.groupValues[1].toInt() }.max() ?: 0
+      .map { it.groupValues[1].toInt() }.maxOrNull() ?: 0
   }
 
   fun createNextDay(base: File, author: String) {
@@ -62,6 +62,7 @@ object DayGenerator {
           it.startsWith("package") || it.startsWith("import day")  -> it.replace("day", "day$next")
           it.startsWith(" * @author") -> " * @author $author"
           it.startsWith(" * @since") -> " * @since $date"
+          it.contains("day") -> it.replace("day", "day$next")
           else -> it
         }
       }
