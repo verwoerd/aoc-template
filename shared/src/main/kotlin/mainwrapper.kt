@@ -23,8 +23,6 @@ inline fun withResourceFile(problem: (BufferedReader) -> Any) {
   }
 }
 
-
-
 fun openInput() : BufferedReader {
   val file = Paths.get("src/main/resources/input").toAbsolutePath().toFile()
   if(file.exists()) {
