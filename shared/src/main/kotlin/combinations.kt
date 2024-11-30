@@ -21,7 +21,7 @@ fun <T> nonRepeatingPermutations(length: Int, components: Collection<T>): List<L
 fun <T> allPermutations(set: Set<T>): Set<List<T>> {
   if (set.isEmpty()) return emptySet()
 
-   return realAllPermutations(set.toList())
+  return realAllPermutations(set.toList())
 }
 
 private fun <T> realAllPermutations(list: List<T>): Set<List<T>> {

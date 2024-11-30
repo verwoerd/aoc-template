@@ -18,6 +18,7 @@ data class Coordinate(val x: Int, val y: Int) : Comparable<Coordinate> {
   operator fun div(other: Coordinate): Coordinate = Coordinate(x / other.x, y / other.y)
   infix fun plusY(i: Number): Coordinate = plus(Coordinate(0, i.toInt()))
   infix fun plusX(i: Number): Coordinate = plus(Coordinate(i.toInt(), 0))
+  fun mod(other: Coordinate): Coordinate  = Coordinate(x.mod(other.x), y.mod(other.y))
 }
 
 
@@ -41,7 +42,7 @@ fun <V> Map<Coordinate, V>.printMap(seperater: String = "", transform: (V?) -> C
   val (xStart, xEnd) = xRange()
   val (yStart, yEnd) = yRange()
   println((yStart..yEnd).joinToString("\n") {y ->
-    (xStart..xEnd).joinToString("") {x-> "${transform(get(Coordinate(x,y)))}" }
+    (xStart..xEnd).joinToString(seperater) {x-> "${transform(get(Coordinate(x,y)))}" }
   })
 }
 
@@ -66,9 +67,39 @@ fun adjacentCircularCoordinates(origin: Coordinate) = sequenceOf(
 fun Coordinate.isInRange(start: Coordinate, endInclusive: Coordinate) =
   x >= start.x && y >= start.x && x <= endInclusive.x && y <= endInclusive.y
 
-enum class FourDirections(val direction: Coordinate) {
+enum class FourDirections(private val direction: Coordinate) {
   DOWN(Coordinate(0, -1)),
   UP(Coordinate(0, 1)),
+  LEFT(Coordinate(-1, 0)),
+  RIGHT(Coordinate(1, 0));
+
+  operator fun plus(other: Coordinate) = direction + other
+
+  fun turnLeft() = when (this) {
+    UP -> LEFT
+    LEFT -> DOWN
+    DOWN -> RIGHT
+    RIGHT -> UP
+  }
+
+  fun turnRight() = when (this) {
+    UP -> RIGHT
+    RIGHT -> DOWN
+    DOWN -> LEFT
+    LEFT -> UP
+  }
+
+  fun turnAround() = when (this) {
+    UP -> DOWN
+    DOWN -> UP
+    LEFT -> RIGHT
+    RIGHT -> LEFT
+  }
+}
+
+enum class FourDirectionFlipped(private val direction: Coordinate) {
+  DOWN(Coordinate(0, 1)),
+  UP(Coordinate(0, -1)),
   LEFT(Coordinate(-1, 0)),
   RIGHT(Coordinate(1, 0));
 

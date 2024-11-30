@@ -1,5 +1,5 @@
 plugins {
- `kotlin-dsl`
+  `kotlin-dsl`
 }
 
 repositories {
@@ -8,5 +8,5 @@ repositories {
 }
 
 dependencies {
-  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.21")
+  implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
 }
