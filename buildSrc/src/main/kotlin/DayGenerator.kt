@@ -12,10 +12,8 @@ import java.util.Locale
 object DayGenerator {
   private val moduleRegex = Regex("day(\\d\\d)")
 
-  fun findLastDay(base: File): Int {
-    return base.list()!!.mapNotNull { moduleRegex.matchEntire(it) }
-      .map { it.groupValues[1].toInt() }.maxOrNull() ?: 0
-  }
+  fun findLastDay(base: File): Int =
+    base.list()!!.mapNotNull { moduleRegex.matchEntire(it) }.maxOfOrNull { it.groupValues[1].toInt() } ?: 0
 
   fun createNextDay(base: File, author: String) {
     val next = findLastDay(base).inc().toString().padStart(2, '0')
@@ -53,12 +51,12 @@ object DayGenerator {
       "src/main/kotlin/main.kt",
       "src/test/kotlin/day$next/part1/Part1Test.kt",
       "src/test/kotlin/day$next/part2/Part2Test.kt"
-          ).map {
+    ).map {
       module.resolve(it)
     }.forEach { filename ->
       val lines = Files.readAllLines(filename).map {
         when {
-          it.startsWith("package") || it.startsWith("import day")  -> it.replace("day", "day$next")
+          it.startsWith("package") || it.startsWith("import day") -> it.replace("day", "day$next")
           it.startsWith(" * @author") -> " * @author $author"
           it.startsWith(" * @since") -> " * @since $date"
           it.contains("day") -> it.replace("day", "day$next")
@@ -71,8 +69,8 @@ object DayGenerator {
     // Update settings.gradle.kts
     val settings = path.resolve("settings.gradle.kts")
     val lines = Files.readAllLines(settings)
-    lines[lines.size-2] = lines[lines.size-2] +","
-    lines[lines.size-1] = """  "day$next""""
+    lines[lines.size - 2] = lines[lines.size - 2] + ","
+    lines[lines.size - 1] = """  "day$next""""
     lines.add("       )")
     Files.write(settings, lines)
   }

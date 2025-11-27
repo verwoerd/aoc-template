@@ -15,11 +15,3 @@ dependencies {
   implementation("io.kotest:kotest-assertions-core:$kotestVersion")
   implementation("io.kotest:kotest-property:$kotestVersion")
 }
-
-kotlin {
-  sourceSets.all {
-    languageSettings {
-      languageVersion = "2.0"
-    }
-  }
-}

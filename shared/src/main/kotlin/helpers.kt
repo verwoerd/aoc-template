@@ -13,13 +13,13 @@ fun Boolean.toInt() = when {
 infix fun Long.ceilDivision(b: Number) = ceil(this / b.toDouble()).toLong()
 infix fun Int.ceilDivision(b: Number) = ceil(this / b.toDouble()).toInt()
 
-fun <T> priorityQueueOf(vararg args: T): PriorityQueue<T> {
+fun <T: Any> priorityQueueOf(vararg args: T): PriorityQueue<T> {
   val queue = PriorityQueue<T>()
   queue.addAll(args)
   return queue
 }
 
-fun <T> priorityQueueOf(comparator: Comparator<T>, vararg args: T): PriorityQueue<T> {
+fun <T: Any> priorityQueueOf(comparator: Comparator<T>, vararg args: T): PriorityQueue<T> {
   val queue = PriorityQueue<T>(comparator)
   queue.addAll(args)
   return queue

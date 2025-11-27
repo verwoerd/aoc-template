@@ -1,6 +1,6 @@
 import java.io.BufferedReader
 import java.io.FileOutputStream
-import java.net.URL
+import java.net.URI
 import java.nio.channels.Channels
 import java.nio.file.Paths
 
@@ -34,7 +34,7 @@ fun openInput() : BufferedReader {
   val year = System.getenv("AOC_YEAR") ?: error("Please define AOC_YEAR")
   val day =System.getenv("AOC_DAY") ?: error("Please define AOC_DAY")
   val session = System.getenv("AOC_SESSION") ?: error("Please define AOC_SESSION")
-  val url = URL("https://adventofcode.com/$year/day/$day/input").openConnection()
+  val url = URI("https://adventofcode.com/$year/day/$day/input").toURL().openConnection()
   url.setRequestProperty("Cookie", "session=$session")
   val input = Channels.newChannel(url.getInputStream())
   output.transferFrom(input, 0, Long.MAX_VALUE)
